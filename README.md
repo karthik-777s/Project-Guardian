@@ -82,55 +82,6 @@ The lab simulates an attacker sending HTTP requests to a vulnerable web applicat
 
 ---
 
-## Setup (High-Level)
-
-> Note: Exact commands, OS details, and versions depend on your environment (VMs, Docker, bare metal). Update this section with your specific steps once your lab is fully built.
-
-1. **Prepare environment**
-   - Create at least three VMs or containers:
-     - Web server (DVWA + Wazuh agent + SafeLine WAF installed locally or in front).
-     - Security monitoring server (Wazuh Manager).
-     - SIEM server (Splunk).
-   - Optionally, add a separate VM for Snort IDS.
-
-2. **Deploy DVWA**
-   - Install a web server stack (e.g., Apache + PHP + MySQL/MariaDB).
-   - Deploy DVWA, configure database, and ensure DVWA is reachable locally.
-   - Set DVWA security level and enable the modules you plan to test.
-
-3. **Deploy SafeLine WAF**
-   - Install and configure SafeLine WAF in front of the DVWA server (reverse proxy style).
-   - Configure a virtual host / site so that traffic to the WAF is forwarded to DVWA.
-   - Enable and verify WAF logging.
-
-4. **Deploy Snort IDS**
-   - Install Snort on a host that can see traffic between SafeLine WAF and DVWA.
-   - Configure Snort with appropriate rule sets.
-   - Verify that Snort generates alerts when test attacks are performed.
-
-5. **Deploy Wazuh**
-   - Install Wazuh Manager on a dedicated VM or server.
-   - Install Wazuh agent on the DVWA web server and enroll it with the Manager.
-   - Configure Wazuh to collect relevant logs (web server logs, auth logs, system logs).
-   - Optionally, integrate Snort and/or SafeLine logs into Wazuh.
-
-6. **Deploy Splunk**
-   - Install Splunk Enterprise or Splunk Free on the SIEM VM.
-   - Configure data inputs:
-     - Wazuh integration (via Wazuh app or a forwarding mechanism).
-     - Optional direct inputs for Snort and SafeLine logs.
-   - Verify that events are being indexed in Splunk.
-
-7. **Test the lab**
-   - Generate benign and malicious traffic to DVWA through the WAF.
-   - Confirm:
-     - SafeLine WAF logs requests and blocks where expected.
-     - Snort produces IDS alerts for attack traffic.
-     - Wazuh receives and displays host events (and any integrated WAF/IDS logs).
-     - Splunk shows all relevant events and you can search by IP, URL, rule ID, etc.
-
----
-
 ## Learning Objectives
 
 - Understand how WAF, IDS, HIDS, and SIEM components complement each other in a layered defense.
@@ -139,12 +90,3 @@ The lab simulates an attacker sending HTTP requests to a vulnerable web applicat
 - Build a portfolio-ready security lab that demonstrates blue-team skills and modern monitoring practices.
 
 ---
-
-## Future Enhancements (Optional)
-
-You can extend this lab with:
-
-- Automation and response playbooks (e.g., blocking IPs based on alerts).
-- Additional vulnerable applications or microservices.
-- Integration with cloud services or containerization (Docker, Kubernetes).
-- Threat intel feeds and enrichment inside Wazuh or Splunk.
